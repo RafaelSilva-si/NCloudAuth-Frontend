@@ -17,17 +17,20 @@ export function* login(payload) {
 	try {
 		const response = yield call(auth.login, {
 			...payload.user,
-			app: process.env.REACT_APP_APP_AUTH,
 		});
 
-
-
-		if (response.data.user) {
-			yield put(actions.setUser(response.data.user));
+		if (response.data) {
+			yield put(actions.setUser(response.data.access_token));
 			yield put(actions.setToken(response.data.token));
-			localStorage.setItem('user', JSON.stringify(response.data.user));
-			localStorage.setItem('token', JSON.stringify(response.data.token));
-			navigate('/')
+			localStorage.setItem(
+				'user',
+				JSON.stringify(response.data.access_token),
+			);
+			localStorage.setItem(
+				'token',
+				JSON.stringify(response.data.access_token),
+			);
+			navigate('/');
 		}
 	} catch (error) {
 		yield put(
@@ -40,7 +43,6 @@ export function* login(payload) {
 
 	yield put(apiActions.apiEnd());
 }
-
 
 export function* logout() {
 	try {
@@ -76,7 +78,6 @@ export function* checkUser() {
 		yield put(actions.setToken(JSON.parse(token)));
 		yield put(enterpriseActions.setSelectCompany(JSON.parse(company)));
 		yield put(actions.setUser(JSON.parse(storedUser)));
-		yield put(enterpriseActions.getListCompanies(JSON.parse(company)));
 	} else {
 		navigate('/login');
 	}

@@ -23,8 +23,6 @@ api.interceptors.response.use(
 
 		if (response.data.detail === 'Invalid Token') {
 			localStorage.removeItem('token');
-			localStorage.removeItem('user');
-			localStorage.removeItem('company');
 
 			return navigate('/login');
 		}
@@ -51,8 +49,6 @@ api.interceptors.response.use(
 				return await api.request(requestConfig);
 			} catch (exception) {
 				localStorage.removeItem('token');
-				localStorage.removeItem('user');
-				localStorage.removeItem('company');
 
 				return navigate('/login');
 			}

@@ -1,6 +1,6 @@
 import api from './api';
 
-export const login = params => api.post('/token', params);
+export const login = params => api.post('/login', params);
 
 export const allowedModules = () => api.get('/module/allowed');
 

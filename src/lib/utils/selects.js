@@ -1,7 +1,7 @@
 export const statusList = [
 	{ id: '', name: 'Todos' },
-	{ id: 'true', name: 'Ativos' },
-	{ id: 'false', name: 'Desativados' },
+	{ id: 1, name: 'Ativos' },
+	{ id: 0, name: 'Desativados' },
 ];
 
 export const typeCompany = [
@@ -36,7 +36,8 @@ export const subMercado = [
 export const categoriaClient = [
 	{ id: 1, name: 'Especial' },
 	{ id: 2, name: 'Livre' },
-	{ id: 3, name: 'Auto Produtor' },,
+	{ id: 3, name: 'Auto Produtor' },
+	,
 ];
 
 export const assemblyOptions = [
@@ -56,7 +57,7 @@ export const subgroups = [
 	{ id: 3, name: 'A3A' },
 	{ id: 4, name: 'A4' },
 	{ id: 5, name: 'AS' },
-]
+];
 
 export const meses = [
 	{ id: 1, name: 'Janeiro' },
@@ -71,4 +72,4 @@ export const meses = [
 	{ id: 10, name: 'Outubro' },
 	{ id: 11, name: 'Novembro' },
 	{ id: 12, name: 'Dezembro' },
-]
+];

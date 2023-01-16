@@ -1,19 +1,15 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import PageSpinner from '../Page/PageSpinner';
 import Page404 from '../Page/Page404';
+import routes from '../../../routes/routes';
 
 const RenderRoutes = () => {
-	const permissionsRoutes = useSelector(
-		state => state.enterprise.permissionsRoutes,
-	);
-
 	return (
 		<React.Suspense fallback={<PageSpinner />}>
-			{permissionsRoutes.length > 0 ? (
+			{routes.length > 0 ? (
 				<Switch>
-					{permissionsRoutes.map(route => (
+					{routes.map(route => (
 						<Route
 							exact
 							path={route.path}

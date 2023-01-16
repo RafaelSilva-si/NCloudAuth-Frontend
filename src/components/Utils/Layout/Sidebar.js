@@ -12,14 +12,11 @@ import PropTypes from '../../../lib/utils/propTypes';
 import { MdMenuOpen } from 'react-icons/md';
 import { genericsActions } from '../../../store/actions';
 
-
 const sidebarBackground = {
 	// backgroundImage: `url("${R.images.sidebar}")`,
 	backgroundSize: 'cover',
 	backgroundRepeat: 'no-repeat',
 };
-
-
 
 const bem = bn.create('sidebar');
 
@@ -40,15 +37,18 @@ class Sidebar extends React.Component {
 			.classList.toggle('cr-sidebar--open');
 		document.querySelector('.cr-header').classList.toggle('open');
 
-
-		if (document.querySelector('.cr-sidebar').classList.contains('cr-sidebar--open')) {
+		if (
+			document
+				.querySelector('.cr-sidebar')
+				.classList.contains('cr-sidebar--open')
+		) {
 			this.state.isOpenSide = false;
 		} else {
 			this.state.isOpenSide = true;
 		}
 
 		const { onSidebar } = this.props;
-		onSidebar(this.state.isOpenSide)
+		onSidebar(this.state.isOpenSide);
 	};
 
 	handleClick = name => () => {
@@ -77,7 +77,6 @@ class Sidebar extends React.Component {
 		});
 	};
 
-
 	render() {
 		const { modules, permissionsMenu, user } = this.props;
 		return (
@@ -91,50 +90,49 @@ class Sidebar extends React.Component {
 					<div className={bem.e('up')}>
 						<Navbar>
 							<SourceLink className="navbar-brand nav-logo d-flex">
-								<img src={R.images.logo_oficial} height="50" alt="" />
+								<img
+									src={R.images.logo_oficial}
+									height="20"
+									alt=""
+								/>
 							</SourceLink>
 							<div>
-								<Button outline onClick={this.handleSidebarControlButton} className={bem.e('menu')}>
+								<Button
+									outline
+									onClick={this.handleSidebarControlButton}
+									className={bem.e('menu')}>
 									<MdMenuOpen size={20} />
 								</Button>
 							</div>
 						</Navbar>
-
 					</div>
-					{modules.length > 0 ? (
-						<div>
-							<Nav vertical>
-								{navItems.map(
-									({ to, name, exact, Icon }, index) => (
-										<NavItem
-											key={name}
-											className={bem.e('nav-item')}>
-											<BSNavLink
-												id={`navItem-${name}-${index}`}
-												tag={NavLink}
-												to={to}
-												activeClassName="active"
-												exact={exact}>
-												<Icon
-													className={bem.e(
-														'nav-item-icon',
-													)}
-												/>
-												<span className="nav-name">
-													{name}
-												</span>
-											</BSNavLink>
-										</NavItem>
-									),
-								)}
-								{this.modulePermission(permissionsMenu)}
-							</Nav>
-						</div>
-					) : (
-						<div align="center" className="mt-4">
-							<PulseLoader color="#fff" />
-						</div>
-					)}
+					<div>
+						<Nav vertical>
+							{navItems.map(
+								({ to, name, exact, Icon }, index) => (
+									<NavItem
+										key={name}
+										className={bem.e('nav-item')}>
+										<BSNavLink
+											id={`navItem-${name}-${index}`}
+											tag={NavLink}
+											to={to}
+											activeClassName="active"
+											exact={exact}>
+											<Icon
+												className={bem.e(
+													'nav-item-icon',
+												)}
+											/>
+											<span className="nav-name">
+												{name}
+											</span>
+										</BSNavLink>
+									</NavItem>
+								),
+							)}
+						</Nav>
+					</div>
 				</div>
 			</aside>
 		);
@@ -145,7 +143,7 @@ const mapStateToProps = state => {
 	return {
 		modules: state.enterprise.modulesCompany,
 		permissionsMenu: state.enterprise.permissionsMenu,
-		user: state.auth.user
+		user: state.auth.user,
 	};
 };
 

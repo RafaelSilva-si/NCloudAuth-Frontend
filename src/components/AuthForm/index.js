@@ -8,7 +8,7 @@ import {
 	InputGroup,
 	InputGroupAddon,
 	Row,
-	Col
+	Col,
 } from 'reactstrap';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { MdChevronRight, MdLock, MdPerson } from 'react-icons/md';
@@ -20,7 +20,7 @@ class AuthForm extends React.Component {
 		super(props);
 
 		this.state = {
-			username: '',
+			email: '',
 			password: '',
 			usernameInvalid: false,
 			passwordInvalid: false,
@@ -33,9 +33,9 @@ class AuthForm extends React.Component {
 	handleSubmit(event, submit) {
 		event.preventDefault();
 
-		const { password, username } = this.state;
+		const { password, email } = this.state;
 
-		if (password === '' && username === '') {
+		if (password === '' && email === '') {
 			this.setState({ usernameInvalid: true, passwordInvalid: true });
 			return;
 		}
@@ -45,12 +45,12 @@ class AuthForm extends React.Component {
 			return;
 		}
 
-		if (username === '') {
+		if (email === '') {
 			this.setState({ usernameInvalid: true });
 			return;
 		}
 
-		const data = { username, password };
+		const data = { email, password };
 		submit(data);
 	}
 
@@ -76,7 +76,7 @@ class AuthForm extends React.Component {
 		} = this.props;
 
 		const {
-			username,
+			email,
 			password,
 			passwordInvalid,
 			usernameInvalid,
@@ -84,30 +84,42 @@ class AuthForm extends React.Component {
 
 		return (
 			<Row>
-
-				<Col xl={6} lg={6} md={6} className='d-none d-md-block'>
-					<img src={R.images.banner_login} className='banner' />
+				<Col xl={6} lg={6} md={6} className="d-none d-md-block">
+					<img src={R.images.banner_login} className="banner" />
 				</Col>
 				<Col xl={6} lg={6} md={12}>
 					<div className="container">
 						<div className="screen">
 							<div className="screen__content">
-								<Form onSubmit={e => this.handleSubmit(e, onSubmit)}>
+								<Form
+									onSubmit={e =>
+										this.handleSubmit(e, onSubmit)
+									}>
 									{showLogo && (
-										<SourceLink >
-											<img src={R.images.logo_oficial} height="60" alt="" className="text-center" />
+										<SourceLink>
+											<img
+												src={R.images.logo_oficial}
+												height="30"
+												alt=""
+												className="text-center"
+											/>
 										</SourceLink>
 									)}
 
 									<InputGroup>
-										<InputGroupAddon addonType="prepend" className="authInput">
-											<MdPerson color="#F2F2F2" size={18} />
+										<InputGroupAddon
+											addonType="prepend"
+											className="authInput">
+											<MdPerson
+												color="#F2F2F2"
+												size={18}
+											/>
 										</InputGroupAddon>
 										<Input
 											{...usernameInputProps}
 											invalid={usernameInvalid}
 											onChange={this.handleChange}
-											value={username || ''}
+											value={email || ''}
 										/>
 										<FormFeedback className="ml-3">
 											{usernameInvalidMsg}
@@ -137,14 +149,19 @@ class AuthForm extends React.Component {
 										{!loading ? (
 											<div>
 												{R.strings.login.login}{' '}
-												<MdChevronRight size={25} className="float-right" />
+												<MdChevronRight
+													size={25}
+													className="float-right"
+												/>
 											</div>
 										) : (
 											<div>
 												{R.strings.login.login}
 												<ClipLoader
 													size={20}
-													color={R.colors.colorPrimary}
+													color={
+														R.colors.colorPrimary
+													}
 													loading={loading}
 													className="float-right"
 												/>
@@ -157,7 +174,6 @@ class AuthForm extends React.Component {
 					</div>
 				</Col>
 			</Row>
-
 		);
 	}
 }
@@ -183,7 +199,7 @@ AuthForm.defaultProps = {
 	usernameInputProps: {
 		type: 'string',
 		placeholder: R.strings.login.userPlaceholder,
-		name: 'username',
+		name: 'email',
 	},
 	passwordInvalidMsg: 'Preencha o campo senha!',
 	passwordInputProps: {
