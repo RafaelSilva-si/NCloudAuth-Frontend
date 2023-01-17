@@ -1,7 +1,7 @@
-import groupsReducer from './reducers';
+import providerReducer from './reducers';
 
-export { default as groupsTypes } from './types';
-export { default as groupsActions } from './actions';
-export { default as groupsSagas } from './sagas';
+export { default as providerTypes } from './types';
+export { default as providerActions } from './actions';
+export { default as providerSagas } from './sagas';
 
-export default groupsReducer;
+export default providerReducer;

@@ -9,7 +9,7 @@ const api = axios.create({
 const token = JSON.parse(localStorage.getItem('token'));
 
 if (token) {
-	api.defaults.headers.common.Authorization = `Token ${token}`;
+	api.defaults.headers.common.Authorization = `Bearer ${token}`;
 }
 
 api.interceptors.response.use(

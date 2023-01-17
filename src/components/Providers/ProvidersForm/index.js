@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import PropTypes from '../../../lib/utils/propTypes';
 import Card from '../../Utils/Card/FormCard';
 import { InputLabel, SelectLabel } from '../../Utils';
-import { statusList } from '../../../lib/utils/selects';
 
 const FormProvider = ({
 	providerLabel,
@@ -15,21 +14,29 @@ const FormProvider = ({
 	btnLabelCancel,
 	handleNavigation,
 	onSubmit,
-	user,
+	provider,
 	edit,
 	...restProps
 }) => {
 	const { register, handleSubmit, setValue } = useForm({
-		defaultValues: user,
+		defaultValues: provider,
 	});
 
-	const [status, setStatus] = useState({ selectedOption: statusList[1] });
+	const [status, setStatus] = useState({ selectedOption: false });
 
 	const handleChangeStatus = selectedOption => {
 		setValue('status', selectedOption.id);
 		setStatus({ selectedOption });
 	};
 
+	React.useEffect(() => {
+		if (provider) {
+			handleChangeStatus({
+				id: provider.status,
+				name: provider.status == 0 ? 'Inativo' : 'Ativo',
+			});
+		}
+	}, provider);
 	React.useEffect(() => {
 		register({ name: 'status' });
 	}, [register]);
@@ -49,7 +56,10 @@ const FormProvider = ({
 						<SelectLabel
 							label={statusLabel}
 							{...statusInputProps}
-							options={statusList}
+							options={[
+								{ id: 0, name: 'Inativo' },
+								{ id: 1, name: 'Ativo' },
+							]}
 							onChange={handleChangeStatus}
 							value={status.selectedOption}
 						/>
@@ -96,6 +106,7 @@ FormProvider.defaultProps = {
 	},
 	statusLabel: 'Status',
 	statusInputProps: {
+		placeholder: 'Selecione o status...',
 		name: 'status',
 		id: 'status',
 	},

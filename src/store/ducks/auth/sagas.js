@@ -46,17 +46,13 @@ export function* login(payload) {
 
 export function* logout() {
 	try {
-		const response = yield call(auth.logout);
+		yield put(actions.resetUser());
 
-		if (response) {
-			yield put(actions.resetUser());
+		localStorage.removeItem('token');
+		localStorage.removeItem('user');
+		localStorage.removeItem('company');
 
-			localStorage.removeItem('token');
-			localStorage.removeItem('user');
-			localStorage.removeItem('company');
-
-			navigate('/login');
-		}
+		navigate('/login');
 	} catch (error) {
 		yield put(actions.resetUser());
 

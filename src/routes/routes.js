@@ -27,6 +27,12 @@ const routes = [
 		component: ProviderRegisterPage,
 		permission: false,
 	},
+	{
+		path: '/providers/editar/:id',
+		name: 'Provedores edit',
+		component: ProviderRegisterPage,
+		permission: false,
+	},
 ];
 
 export default routes;

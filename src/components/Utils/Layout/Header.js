@@ -1,6 +1,11 @@
 import React from 'react';
-import { MdCalendarToday, MdExitToApp, MdHelp, MdPersonPin } from 'react-icons/md';
-import { RiMenuUnfoldLine } from 'react-icons/ri'
+import {
+	MdCalendarToday,
+	MdExitToApp,
+	MdHelp,
+	MdPersonPin,
+} from 'react-icons/md';
+import { RiMenuUnfoldLine } from 'react-icons/ri';
 import {
 	Button,
 	ListGroup,
@@ -14,7 +19,11 @@ import {
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import bn from '../../../lib/utils/bemnames';
-import { authActions, enterpriseActions, genericsActions } from '../../../store/actions';
+import {
+	authActions,
+	enterpriseActions,
+	genericsActions,
+} from '../../../store/actions';
 import { navigate } from '../../../lib/utils/navigation';
 import Avatar from '../Avatar';
 import { UserCard } from '../Card';
@@ -80,14 +89,18 @@ class Header extends React.Component {
 			.classList.toggle('cr-sidebar--open');
 		document.querySelector('.cr-header').classList.toggle('open');
 
-		if (document.querySelector('.cr-sidebar').classList.contains('cr-sidebar--open')) {
+		if (
+			document
+				.querySelector('.cr-sidebar')
+				.classList.contains('cr-sidebar--open')
+		) {
 			this.state.isOpenSide = false;
 		} else {
 			this.state.isOpenSide = true;
 		}
 
 		const { onSidebar } = this.props;
-		onSidebar(this.state.isOpenSide)
+		onSidebar(this.state.isOpenSide);
 	};
 
 	render() {
@@ -97,24 +110,27 @@ class Header extends React.Component {
 			select,
 			onChangeCompany,
 			onLogoutUser,
-			isOpen
+			isOpen,
 		} = this.props;
 
 		const { isOpenUserCardPopover } = this.state;
-		const day = getDate()
+		const day = getDate();
 		return (
 			<Navbar light expand className={bem.b('open')}>
 				{isOpen && (
 					<Nav navbar className="mr-2">
-						<Button outline onClick={this.handleSidebarControlButton} className={bem.e('buttonHam')}>
+						<Button
+							outline
+							onClick={this.handleSidebarControlButton}
+							className={bem.e('buttonHam')}>
 							<RiMenuUnfoldLine size={20} />
 						</Button>
 					</Nav>
 				)}
-				
-				<Nav style={{paddingTop: '5px'}} className={bem.e('date')}>
+
+				<Nav style={{ paddingTop: '5px' }} className={bem.e('date')}>
 					<MdCalendarToday size={20} />
-					<span style={{paddingLeft: '10px', fontWeight: 'bolder'}} >
+					<span style={{ paddingLeft: '10px', fontWeight: 'bolder' }}>
 						{day}
 					</span>
 				</Nav>
@@ -150,16 +166,30 @@ class Header extends React.Component {
 
 					<NavItem>
 						<NavLink id="Popover2">
-							<div style={{textAlign: 'right', fontSize: '11px', paddingRight: '10px'}}>Olá,<br />
-								<span 
-								style={{fontWeight:'bolder', fontSize: '15px'}}>
-									{user.first_name} 
+							<div
+								style={{
+									textAlign: 'right',
+									fontSize: '11px',
+									paddingRight: '10px',
+								}}>
+								Olá,
+								<br />
+								<span
+									style={{
+										fontWeight: 'bolder',
+										fontSize: '15px',
+									}}>
+									{user.first_name}
 								</span>
 							</div>
 							<Avatar
 								onClick={this.toggleUserCardPopover}
 								className="can-click mr-3"
-								src={user.img ? `${process.env.REACT_APP_BASE_APP}${user.img}` : R.images.logo_teste}
+								src={
+									user.img
+										? `${process.env.REACT_APP_BASE_APP}${user.img}`
+										: R.images.logo_teste
+								}
 							/>
 						</NavLink>
 						<Popover
@@ -175,29 +205,12 @@ class Header extends React.Component {
 										title={user.first_name}
 										subtitle={user.email}
 										className="border-light"
-										avatar={user.img ? `${process.env.REACT_APP_BASE_APP}${user.img}` : R.images.logo_teste}>
+										avatar={
+											user.img
+												? `${process.env.REACT_APP_BASE_APP}${user.img}`
+												: R.images.logo_teste
+										}>
 										<ListGroup flush>
-											<ListGroupItem
-												tag="button"
-												action
-												className="border-light"
-												onClick={() =>
-													navigate('/perfil')
-												}>
-												<MdPersonPin /> Perfil
-											</ListGroupItem>
-											{/* <ListGroupItem tag="button" action className="border-light">
-												<MdSettingsApplications /> Configurações
-											</ListGroupItem> */}
-											<ListGroupItem
-												tag="button"
-												action
-												className="border-light"
-												onClick={() =>
-													navigate('/ajuda')
-												}>
-												<MdHelp /> Ajuda
-											</ListGroupItem>
 											<ListGroupItem
 												tag="button"
 												action
@@ -222,7 +235,7 @@ const mapStateToProps = state => {
 		user: state.auth.user,
 		companies: state.enterprise.companies,
 		select: state.enterprise.selecCompany,
-		isOpen: state.generics.isOpen
+		isOpen: state.generics.isOpen,
 	};
 };
 

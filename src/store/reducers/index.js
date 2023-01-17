@@ -6,6 +6,7 @@ import usersReducer from '../ducks/users';
 import enterpriseReducer from '../ducks/enterprise';
 import genericsReducer from '../ducks/generics';
 import groupsReducer from '../ducks/groups';
+import providerReducer from '../ducks/provider';
 
 const rootReducer = combineReducers({
 	auth: authReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
 	enterprise: enterpriseReducer,
 	generics: genericsReducer,
 	group: groupsReducer,
+	provider: providerReducer,
 });
 
 export default rootReducer;

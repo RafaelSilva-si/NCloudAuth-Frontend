@@ -7,6 +7,7 @@ import {
 	notificationActions,
 	usersActions,
 	genericsActions,
+	providerActions,
 } from '../../store/actions';
 import R from '../../lib/constants/R';
 import { LoadingContent, Page } from '../../components/Utils/Page';
@@ -24,7 +25,7 @@ class ProviderRegisterPage extends React.Component {
 	}
 
 	async componentDidMount() {
-		const { onGetUser, match } = this.props;
+		const { onGetProvider, match } = this.props;
 
 		const { id } = match.params;
 
@@ -33,42 +34,25 @@ class ProviderRegisterPage extends React.Component {
 		});
 
 		if (id) {
-			await onGetUser(id);
+			await onGetProvider(id);
 		}
 	}
 
 	onSubmit = data => {
-		const { onEditUser, onAddNotification, onAddUser } = this.props;
+		const { onEditProvider, onAddProvider } = this.props;
 		const { id } = this.state;
 		const values = data;
 		if (id) {
-			if (data.password === '') {
-				delete values.password;
-			} else if (data.password !== data.confirm_password) {
-				onAddNotification(R.strings.error.passwordError, 'error');
-				return;
-			}
-			onEditUser(values, id);
+			onEditProvider(values, id);
 		} else {
-			if (data.password !== data.confirm_password) {
-				onAddNotification(R.strings.error.passwordError, 'error');
-				return;
-			}
-
-			onAddUser(data);
+			onAddProvider(data);
 		}
 	};
 
 	render() {
 		const { id } = this.state;
 
-		const {
-			user,
-			loading,
-			companies,
-			groups,
-			representatives,
-		} = this.props;
+		const { provider, loading } = this.props;
 
 		return (
 			<Page
@@ -82,9 +66,9 @@ class ProviderRegisterPage extends React.Component {
 						active: true,
 					},
 				]}>
-				<LoadingContent loading={id ? !user : loading}>
+				<LoadingContent loading={id ? !provider : loading}>
 					<Form
-						user={user}
+						provider={provider}
 						edit={!!id}
 						onSubmit={data => this.onSubmit(data)}
 						handleNavigation={() => navigateBack()}
@@ -98,7 +82,7 @@ class ProviderRegisterPage extends React.Component {
 const mapStateToProps = state => {
 	return {
 		loading: state.api.loading,
-		user: state.user.user,
+		provider: state.provider.provider,
 		companies: state.enterprise.companies,
 		groups: state.group.list,
 		representatives: state.generics.representatives,
@@ -107,20 +91,21 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		onGetUser: id => dispatch(usersActions.getUser(id)),
+		onGetProvider: id => dispatch(providerActions.getProvider(id)),
 		onAddNotification: (message, level) =>
 			dispatch(notificationActions.addNotification(message, level)),
 		onGetGroups: () => dispatch(groupsActions.getListGroups('')),
 		onGetRepresentatives: () =>
 			dispatch(genericsActions.getRepresentatives()),
-		onAddUser: data => dispatch(usersActions.addUser(data)),
-		onEditUser: (data, id) => dispatch(usersActions.editUser(data, id)),
+		onAddProvider: data => dispatch(providerActions.addProvider(data)),
+		onEditProvider: (data, id) =>
+			dispatch(providerActions.editProvider(data, id)),
 	};
 };
 
 ProviderRegisterPage.propTypes = {
 	onAddNotification: PropTypes.func.isRequired,
-	onAddUser: PropTypes.func.isRequired,
+	onAddProvider: PropTypes.func.isRequired,
 	onEditUser: PropTypes.func.isRequired,
 	onGetGroups: PropTypes.func.isRequired,
 	onGetRepresentatives: PropTypes.func.isRequired,

@@ -7,10 +7,10 @@ export const getListProviders = query => {
 	};
 };
 
-export const setListProviders = query => {
+export const setListProviders = providers => {
 	return {
 		type: types.SET_LIST_PROVIDER,
-		query,
+		providers,
 	};
 };
 
@@ -21,10 +21,10 @@ export const addProvider = provider => {
 	};
 };
 
-export const getProvider = query => {
+export const getProvider = provider => {
 	return {
 		type: types.GET_PROVIDER,
-		query,
+		provider,
 	};
 };
 

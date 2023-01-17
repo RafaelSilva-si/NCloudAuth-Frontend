@@ -4,6 +4,7 @@ import watchUsers from '../ducks/users/sagas';
 import watchGroups from '../ducks/groups/sagas';
 import watchEnterprise from '../ducks/enterprise/sagas';
 import watchGenerics from '../ducks/generics/sagas';
+import watchProvider from '../ducks/provider/sagas';
 
 export default function* startForman() {
 	yield fork(watchUserAuthentication);
@@ -11,4 +12,5 @@ export default function* startForman() {
 	yield fork(watchGroups);
 	yield fork(watchEnterprise);
 	yield fork(watchGenerics);
+	yield fork(watchProvider);
 }

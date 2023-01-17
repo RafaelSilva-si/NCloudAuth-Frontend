@@ -1,31 +1,25 @@
-import { SET_LIST_GROUPS, SET_GROUP, SET_GROUP_PERMISSION } from './types';
+import * as types from './types';
 
 const initialState = {
 	list: false,
-	group: false,
-	permission: false,
+	provider: false,
 };
 
-const groupsReducer = (state = initialState, action) => {
+const providerReducer = (state = initialState, action) => {
 	switch (action.type) {
-		case SET_LIST_GROUPS:
+		case types.SET_LIST_PROVIDER:
 			return {
 				...state,
-				list: action.groups,
+				list: action.providers,
 			};
-		case SET_GROUP:
+		case types.SET_PROVIDER:
 			return {
 				...state,
-				group: action.group,
-			};
-		case SET_GROUP_PERMISSION:
-			return {
-				...state,
-				permission: action.permission,
+				provider: action.provider,
 			};
 		default:
 			return state;
 	}
 };
 
-export default groupsReducer;
+export default providerReducer;

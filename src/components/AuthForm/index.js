@@ -84,10 +84,7 @@ class AuthForm extends React.Component {
 
 		return (
 			<Row>
-				<Col xl={6} lg={6} md={6} className="d-none d-md-block">
-					<img src={R.images.banner_login} className="banner" />
-				</Col>
-				<Col xl={6} lg={6} md={12}>
+				<Col xl={12} lg={12} md={12}>
 					<div className="container">
 						<div className="screen">
 							<div className="screen__content">

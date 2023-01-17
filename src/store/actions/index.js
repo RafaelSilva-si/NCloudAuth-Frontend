@@ -5,3 +5,4 @@ export { apiActions } from '../ducks/api';
 export { enterpriseActions } from '../ducks/enterprise';
 export { genericsActions } from '../ducks/generics';
 export { groupsActions } from '../ducks/groups';
+export { providerActions } from '../ducks/provider';

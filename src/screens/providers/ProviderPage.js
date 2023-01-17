@@ -2,16 +2,17 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ProviderList from '../../components/Providers/ProvidersList';
 import { navigate } from '../../lib/utils/navigation';
-import { apiActions, usersActions } from '../../store/actions';
+import { apiActions, providerActions, usersActions } from '../../store/actions';
 import { LoadingContent, Page } from '../../components/Utils/Page';
-import ActiveDeleteEdit from '../../components/Utils/TablesRow/ActiveDeleteEdit';
+import EditDelete from '../../components/Utils/TablesRow/EditDelete';
 import PropTypes from '../../lib/utils/propTypes';
+import { ModalDelete } from '../../components/Utils/Modal';
 
 class ProvidersPage extends React.Component {
 	constructor(props) {
 		super(props);
 
-		const { onActiveDesactiveUser } = this.props;
+		const { onSelect } = this.props;
 
 		this.state = {
 			columns: [
@@ -24,20 +25,18 @@ class ProvidersPage extends React.Component {
 				{
 					name: 'Nome',
 					selector: 'name',
-					cell: row => `${row.first_name} ${row.last_name}`,
 					sortable: true,
-					width: '25%',
 				},
 				{
 					name: 'Ações',
 					selector: 'status',
 					width: '15%',
 					cell: row => (
-						<ActiveDeleteEdit
+						<EditDelete
 							row={row}
 							route="providers"
+							onSelect={row => onSelect(row)}
 							handleNavigation={page => navigate(page)}
-							changeValue={user => onActiveDesactiveUser(user)}
 						/>
 					),
 				},
@@ -46,18 +45,19 @@ class ProvidersPage extends React.Component {
 	}
 
 	async componentDidMount() {
-		const { onGetListUsers, onClearQuery } = this.props;
+		const { onGetListProviders, onClearQuery } = this.props;
 		//await onClearQuery();
-		//await onGetListUsers('active=true');
+		await onGetListProviders('active=true');
 	}
 
 	render() {
 		const {
-			onGetListUsers,
+			onGetListProvider,
 			onClearQuery,
 			list,
 			loading,
-			companies,
+			select,
+			onDelete,
 		} = this.props;
 
 		const { columns } = this.state;
@@ -71,15 +71,18 @@ class ProvidersPage extends React.Component {
 					<ProviderList
 						data={list || []}
 						columns={columns}
-						companies={companies || []}
 						loadingFilter={loading}
 						cleanFilter={() => {
 							onClearQuery();
 						}}
 						handleNavigation={page => navigate(page)}
-						onSubmit={data => console.log(data)}
+						onSubmit={data => onGetListProvider(data)}
 					/>
 				</LoadingContent>
+				<ModalDelete
+					name={select ? select.name : ''}
+					onSubmit={() => onDelete(select.id)}
+				/>
 			</Page>
 		);
 	}
@@ -87,11 +90,15 @@ class ProvidersPage extends React.Component {
 
 const mapStateToProps = state => ({
 	loading: state.api.loading,
-	list: state.user.list,
+	list: state.provider.list,
+	select: state.provider.provider,
 });
 
 const mapDispatchToProps = dispatch => ({
-	onGetListUsers: query => dispatch(usersActions.getListUsers(query)),
+	onGetListProviders: query =>
+		dispatch(providerActions.getListProviders(query)),
+	onSelect: query => dispatch(providerActions.setProvider(query)),
+	onDelete: query => dispatch(providerActions.deleteProvider(query)),
 	onClearQuery: () => dispatch(apiActions.setQueryFilter('')),
 	onActiveDesactiveUser: user =>
 		dispatch(usersActions.activeDesactiveUser(user)),
@@ -100,7 +107,7 @@ const mapDispatchToProps = dispatch => ({
 ProvidersPage.propTypes = {
 	onActiveDesactiveUser: PropTypes.func.isRequired,
 	onClearQuery: PropTypes.func.isRequired,
-	onGetListUsers: PropTypes.func.isRequired,
+	onGetListProviders: PropTypes.func.isRequired,
 	companies: PropTypes.oneOfType([
 		PropTypes.bool,
 		PropTypes.arrayOf(PropTypes.object),
