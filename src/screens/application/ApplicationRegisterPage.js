@@ -1,13 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Form from '../../components/Providers/ProvidersForm';
+import Form from '../../components/Application/ApplicationForm';
 import { navigateBack } from '../../lib/utils/navigation';
 import { providerActions } from '../../store/actions';
-import R from '../../lib/constants/R';
 import { LoadingContent, Page } from '../../components/Utils/Page';
 import PropTypes from '../../lib/utils/propTypes';
 
-class ProviderRegisterPage extends React.Component {
+class ApplicationRegisterPage extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -19,7 +18,7 @@ class ProviderRegisterPage extends React.Component {
 	}
 
 	async componentDidMount() {
-		const { onGetProvider, match } = this.props;
+		const { onGetProvider, match, onGetListProviders } = this.props;
 
 		const { id } = match.params;
 
@@ -27,6 +26,7 @@ class ProviderRegisterPage extends React.Component {
 			id,
 		});
 
+		await onGetListProviders();
 		if (id) {
 			await onGetProvider(id);
 		}
@@ -46,7 +46,7 @@ class ProviderRegisterPage extends React.Component {
 	render() {
 		const { id } = this.state;
 
-		const { provider, loading } = this.props;
+		const { providers, loading } = this.props;
 
 		return (
 			<Page
@@ -60,9 +60,9 @@ class ProviderRegisterPage extends React.Component {
 						active: true,
 					},
 				]}>
-				<LoadingContent loading={id ? !provider : loading}>
+				<LoadingContent loading={id ? providers : loading}>
 					<Form
-						provider={provider}
+						providers={providers}
 						edit={!!id}
 						onSubmit={data => this.onSubmit(data)}
 						handleNavigation={() => navigateBack()}
@@ -76,26 +76,19 @@ class ProviderRegisterPage extends React.Component {
 const mapStateToProps = state => {
 	return {
 		loading: state.api.loading,
-		provider: state.provider.provider,
-		companies: state.enterprise.companies,
-		groups: state.group.list,
-		representatives: state.generics.representatives,
+		providers: state.provider.list,
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
-		onGetProvider: id => dispatch(providerActions.getProvider(id)),
-		onAddProvider: data => dispatch(providerActions.addProvider(data)),
-		onEditProvider: (data, id) =>
-			dispatch(providerActions.editProvider(data, id)),
+		onGetListProviders: query =>
+			dispatch(providerActions.getListProviders(query)),
 	};
 };
 
-ProviderRegisterPage.propTypes = {
-	onAddProvider: PropTypes.func.isRequired,
-	onEditProvider: PropTypes.func.isRequired,
-	onGetProvider: PropTypes.func.isRequired,
+ApplicationRegisterPage.propTypes = {
+	onGetListProviders: PropTypes.func.isRequired,
 	loading: PropTypes.bool.isRequired,
 	match: PropTypes.shape({
 		params: PropTypes.shape({ id: PropTypes.string }),
@@ -105,4 +98,4 @@ ProviderRegisterPage.propTypes = {
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps,
-)(ProviderRegisterPage);
+)(ApplicationRegisterPage);

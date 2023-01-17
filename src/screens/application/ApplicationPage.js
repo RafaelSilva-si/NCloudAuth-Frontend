@@ -8,7 +8,7 @@ import EditDelete from '../../components/Utils/TablesRow/EditDelete';
 import PropTypes from '../../lib/utils/propTypes';
 import { ModalDelete } from '../../components/Utils/Modal';
 
-class ProvidersPage extends React.Component {
+class ApplicationPage extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -28,13 +28,18 @@ class ProvidersPage extends React.Component {
 					sortable: true,
 				},
 				{
+					name: 'Provedor',
+					selector: 'provider_name',
+					sortable: true,
+				},
+				{
 					name: 'Ações',
 					selector: 'status',
 					width: '15%',
 					cell: row => (
 						<EditDelete
 							row={row}
-							route="providers"
+							route="application"
 							onSelect={row => onSelect(row)}
 							handleNavigation={page => navigate(page)}
 						/>
@@ -47,7 +52,7 @@ class ProvidersPage extends React.Component {
 	async componentDidMount() {
 		const { onGetListProviders, onClearQuery } = this.props;
 		//await onClearQuery();
-		await onGetListProviders('active=true');
+		//await onGetListProviders('active=true');
 	}
 
 	render() {
@@ -65,8 +70,8 @@ class ProvidersPage extends React.Component {
 		return (
 			<Page
 				className="users"
-				title="Provedores"
-				breadcrumbs={[{ name: 'Provedores', active: true }]}>
+				title="Aplicações"
+				breadcrumbs={[{ name: 'Aplicações', active: true }]}>
 				<LoadingContent loading={false}>
 					<ProviderList
 						data={list || []}
@@ -100,9 +105,11 @@ const mapDispatchToProps = dispatch => ({
 	onSelect: query => dispatch(providerActions.setProvider(query)),
 	onDelete: query => dispatch(providerActions.deleteProvider(query)),
 	onClearQuery: () => dispatch(apiActions.setQueryFilter('')),
+	onActiveDesactiveUser: user =>
+		dispatch(usersActions.activeDesactiveUser(user)),
 });
 
-ProvidersPage.propTypes = {
+ApplicationPage.propTypes = {
 	onActiveDesactiveUser: PropTypes.func.isRequired,
 	onClearQuery: PropTypes.func.isRequired,
 	onGetListProviders: PropTypes.func.isRequired,
@@ -117,4 +124,4 @@ ProvidersPage.propTypes = {
 	loading: PropTypes.bool.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProvidersPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ApplicationPage);

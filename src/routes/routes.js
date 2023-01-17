@@ -8,6 +8,13 @@ const ProviderRegisterPage = React.lazy(() =>
 	import('screens/providers/ProviderRegisterPage'),
 );
 
+const ApplicationPage = React.lazy(() =>
+	import('screens/application/ApplicationPage'),
+);
+const ApplicationRegisterPage = React.lazy(() =>
+	import('screens/application/ApplicationRegisterPage'),
+);
+
 const routes = [
 	{
 		path: '/',
@@ -15,6 +22,26 @@ const routes = [
 		component: DashboardPage,
 		permission: false,
 	},
+	//APPLICATIONS
+	{
+		path: '/applications',
+		name: 'Aplicação',
+		component: ApplicationPage,
+		permission: false,
+	},
+	{
+		path: '/applications/adicionar',
+		name: 'Aplicação add',
+		component: ApplicationRegisterPage,
+		permission: false,
+	},
+	{
+		path: '/applications/editar/:id',
+		name: 'Aplicação edit',
+		component: ApplicationRegisterPage,
+		permission: false,
+	},
+	//PROVIDERS
 	{
 		path: '/provider',
 		name: 'Provedores',

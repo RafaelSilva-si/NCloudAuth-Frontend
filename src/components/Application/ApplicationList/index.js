@@ -6,7 +6,7 @@ import Filter from './Filter';
 import DataTable from '../../Utils/DataTable';
 import R from '../../../lib/constants/R';
 
-class ProvidersList extends React.Component {
+class ApplicationList extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = { resetPaginationToggle: false };
@@ -50,14 +50,14 @@ class ProvidersList extends React.Component {
 					event="click"
 					icon={<MdAdd />}
 					onClick={() => handleNavigation('/applications/adicionar')}
-					text="Adicionar Provedor"
+					text="Adicionar Aplicação"
 				/>
 			</div>
 		);
 	}
 }
 
-ProvidersList.propTypes = {
+ApplicationList.propTypes = {
 	handleNavigation: PropTypes.func.isRequired,
 	data: PropTypes.arrayOf(PropTypes.object).isRequired,
 	columns: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -66,6 +66,6 @@ ProvidersList.propTypes = {
 	loadingFilter: PropTypes.bool.isRequired,
 };
 
-ProvidersList.defaultProps = {};
+ApplicationList.defaultProps = {};
 
-export default ProvidersList;
+export default ApplicationList;

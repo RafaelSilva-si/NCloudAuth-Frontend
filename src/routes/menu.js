@@ -26,7 +26,7 @@ export const navItems = [
 		Icon: MdDashboard,
 	},
 	{
-		to: '/',
+		to: '/applications',
 		name: 'Aplicações',
 		exact: true,
 		Icon: MdDashboard,
